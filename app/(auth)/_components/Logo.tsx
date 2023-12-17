@@ -14,7 +14,7 @@ export const Logo = () => {
       <div className="bg-white rounded-full p-1">
         <Image src="/spooky.svg" alt="Twitch" height="80" width="80" />
       </div>
-      <div className={cn("flex flex-col items-center",font.className)}>
+      <div className={cn("flex flex-col items-center", font.className)}>
         <p className="text-xl font-semibold">Twitch</p>
         <p className="text-sm text-muted-foreground">Let&apos;s play</p>
       </div>
