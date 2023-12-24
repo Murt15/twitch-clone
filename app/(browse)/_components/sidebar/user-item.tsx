@@ -11,15 +11,15 @@ import { LiveBadge } from "@/components/live-badge"
 
 
 interface UserItemProps {
-    userName: string,
+    username: string,
     imageUrl: string,
     isLive?: boolean
 }
-export const UserItem = ({ userName, imageUrl, isLive }: UserItemProps) => {
+export const UserItem = ({ username, imageUrl, isLive }: UserItemProps) => {
     const pathName = usePathname();
     const { collapsed } = useSidebar(state => state);
 
-    const href = `/${userName}`;
+    const href = `/${username}`;
 
     const isActive = pathName === href;
 
@@ -34,13 +34,13 @@ export const UserItem = ({ userName, imageUrl, isLive }: UserItemProps) => {
             <Link href={href}>
                 <div className={cn("flex items-center w-full gap-x-4", collapsed && "justify-center")}>
                     <UserAvatar
-                        userName={userName}
+                        username={username}
                         imageUrl={imageUrl}
                         isLive={isLive} />
 
                     {!collapsed &&
                         (
-                            <p className="truncate">{userName}</p>
+                        <p className="truncate">{username}</p>
                         )
                     }
                     {!collapsed && isLive && (
