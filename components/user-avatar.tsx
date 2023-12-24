@@ -30,7 +30,7 @@ export const UserAvatar = ({ username, imageUrl, isLive, showBadge, size }: User
     const canshowBadge = showBadge && isLive;
     return (
         <div className="relative">
-            <Avatar className={cn("ring-2 ring-rose-500 border border-background", avatarSizes({ size }))}>
+            <Avatar className={cn(isLive && "ring-2 ring-rose-500 border border-background", avatarSizes({ size }))}>
                 <AvatarImage src={imageUrl} className="object-cover" />
                 <AvatarFallback>
                     {username[0]}
