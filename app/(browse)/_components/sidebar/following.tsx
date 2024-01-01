@@ -6,8 +6,13 @@ import { UserItem, UserItemSkeleton } from "./user-item";
 import { Skeleton } from "@/components/ui/skeleton";
 
 interface FollowingProps {
-    data: (Follow & { following: (User) })[];
+    data: (Follow & {
+        following: User & {
+            stream: { isLive: boolean } | null;
+        }
+    })[]
 }
+
 export const Following = ({ data }: FollowingProps) => {
 
     const { collapsed } = useSidebar(state => state);
@@ -28,7 +33,7 @@ export const Following = ({ data }: FollowingProps) => {
                         key={follow.following.id}
                         username={follow.following.username}
                         imageUrl={follow.following.imageUrl}
-                        isLive={true}
+                        isLive={follow.following.stream?.isLive}
                     />
                 ))}
             </ul>
