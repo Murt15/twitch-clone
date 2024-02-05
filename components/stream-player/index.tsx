@@ -1,25 +1,40 @@
-"use client"
+"use client";
+
 import { LiveKitRoom } from "@livekit/components-react";
 
 import { cn } from "@/lib/utils";
 import { useChatSidebar } from "@/store/use-chat-sidebar";
 import { useViewerToken } from "@/hooks/use-viewer-token";
 
-import { Stream, User } from "@prisma/client";
-
-import { Video, VideoSkeleton } from "./video";
-import { Chat, ChatSkeleton } from "./chat";
-import { ChatToggle } from "./chat-toggle";
-import { Header, HeaderSkeleton } from "./header";
 import { InfoCard } from "./info-card";
 import { AboutCard } from "./about-card";
+import { ChatToggle } from "./chat-toggle";
+import { Chat, ChatSkeleton } from "./chat";
+import { Video, VideoSkeleton } from "./video";
+import { Header, HeaderSkeleton } from "./header";
+
+type CustomStream = {
+  id: string;
+  isChatEnabled: boolean;
+  isChatDelayed: boolean;
+  isChatFollowersOnly: boolean;
+  isLive: boolean;
+  thumbnailUrl: string | null;
+  name: string;
+};
+
+type CustomUser = {
+  id: string;
+  username: string;
+  bio: string | null;
+  stream: CustomStream | null;
+  imageUrl: string;
+  _count: { followedBy: number };
+};
 
 interface StreamPlayerProps {
-  user: User & {
-    stream: Stream | null;
-    _count: { followedBy: number };
-  };
-  stream: Stream;
+  user: CustomUser;
+  stream: CustomStream;
   isFollowing: boolean;
 }
 
@@ -34,6 +49,7 @@ export const StreamPlayer = ({
   if (!token || !name || !identity) {
     return <StreamPlayerSkeleton />;
   }
+
   return (
     <>
       {collapsed && (
@@ -43,16 +59,13 @@ export const StreamPlayer = ({
       )}
       <LiveKitRoom
         token={token}
-        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT__WS_URL}
+        serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
         className={cn(
           "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full",
           collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
         )}
       >
-        <div
-          className="space-y-4 cols-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 
-                lg:overflow-y-auto hidden-scrollbar pb-10"
-        >
+        <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
           <Video hostName={user.username} hostIdentity={user.id} />
           <Header
             hostName={user.username}
