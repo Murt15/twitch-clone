@@ -28,6 +28,7 @@ Key Features:
 - 🗺️ Grouped routes & layouts 
 - 🗃️ MySQL
 - 🚀 Deployment
+- 🐳 Docker
 
 ### Prerequisites
 
@@ -66,4 +67,11 @@ npx prisma db push
 
 ```shell
 npm run dev
+```
+
+### Run with Docker 
+
+```shell
+docker build -t twitch-clone .
+docker run -p 3000:3000 twitch-clone
 ```

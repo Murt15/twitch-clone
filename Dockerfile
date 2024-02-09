@@ -1,9 +1,15 @@
-FROM node:18-alpine 
- 
-WORKDIR /usr/src/app
+FROM node:latest
+
+WORKDIR /app
+
+COPY  package.json .
+
+RUN yarn
 
 COPY . .
 
-RUN npm install 
-RUN npm run build
-CMD ["npm" ,"run", "dev"] 
+RUN yarn build 
+
+CMD ["yarn","start"]
+
+
